@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#BSUB -J 51GHLH
+#BSUB -q parallel
+#BSUB -n 16
+#BSUB -o 51GHLH.out
+#BSUB -e 51GHLH.err
+#BSUB -u cxw496@miami.edu
+#BSUB -N
+#BSUB -B
+cd /nethome/cxw496/software/src/metAMOS-1.5rc3/chen
+
+module load openmpi
+module load R
+module load java
+../initPipeline -f -1 51GHLH.fa -d 51GHLH 
+../runPipeline -t eautils -a soap,velvet,spades,velvet-sc,sga,abyss,mira,ray,masurca,metavelvet -c kraken -g fraggenescan -y -p 16 -d 51GHLH -v -f Assemble,MapReads,FindORFS,Validate,FindRepats,FindScaffoldORFS,Abundance,Classify,Annotate,FunctionalAnnotation
